@@ -3,7 +3,7 @@
 $SDS_BASE_URL = getenv('SDS_BASE_URL');
 if ($SDS_BASE_URL === false) $SDS_BASE_URL = '/';
 
-define ('SDS_BASE_URL', getenv('SDS_BASE_URL'));
+define ('SDS_BASE_URL', $SDS_BASE_URL);
 define ('SDS_HOME_URL', SDS_BASE_URL . 'home.php');
 define ('SDS_LOGIN_URL', SDS_BASE_URL . 'login/certs/login.php');
 define ('SDS_AUTO_LOGIN_URL',  SDS_BASE_URL . 'login/certs/login.php?auto=1');
