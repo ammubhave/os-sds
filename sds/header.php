@@ -34,8 +34,8 @@ require_once(SDS_BASE . "/sds/setupremind.php");
 <head>
   <title><?php echo $sdsPageHeadTitle ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" href="https://simmons.mit.edu/simmons.css" type="text/css" /> 
-  
+  <link rel="stylesheet" href="https://simmons.mit.edu/simmons.css" type="text/css" />
+
   <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -48,7 +48,7 @@ require_once(SDS_BASE . "/sds/setupremind.php");
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-  </script> 
+  </script>
   <?php echo $sdsHeadHTML ?>
 </head>
 <body<?php if(isset($sdsBodyAttrs)) { echo ' ',$sdsBodyAttrs; } ?>>
@@ -61,7 +61,7 @@ require_once(SDS_BASE . "/sds/setupremind.php");
   </td>
 
   <td style="text-align:right">
-<?php 
+<?php
 $crm = count($session->data['reminders']);
 if($crm > 0 and !sdsIsShowingReminders()){
   $plural = "";
@@ -87,7 +87,7 @@ if($crm > 0 and sdsIsShowingReminders()) {
 ?>
 <!-- This is a customized version of code from the website cited below -->
 <!-- *********************************************************
-     * You may use this code for free on any web page provided that 
+     * You may use this code for free on any web page provided that
      * these comment lines and the following credit remain in the code.
      * Floating Div from http://www.javascript-fx.com
      ********************************************************  -->
@@ -124,13 +124,13 @@ function JSFX_FloatDiv(id, sx, sy)
 		var pX, pY;
                 this.sy = this.nominalSy-this.offsetHeight;
                 this.sx = this.nominalSx - this.offsetWidth;
-		pX = (this.sx >= 0) ? 0 : ns ? innerWidth : 
-		document.documentElement && document.documentElement.clientWidth ? 
+		pX = (this.sx >= 0) ? 0 : ns ? innerWidth :
+		document.documentElement && document.documentElement.clientWidth ?
 		document.documentElement.clientWidth : document.body.clientWidth;
-		pY = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ? 
+		pY = ns ? pageYOffset : document.documentElement && document.documentElement.scrollTop ?
 		document.documentElement.scrollTop : document.body.scrollTop;
-		if(this.sy<0) 
-		pY += ns ? innerHeight : document.documentElement && document.documentElement.clientHeight ? 
+		if(this.sy<0)
+		pY += ns ? innerHeight : document.documentElement && document.documentElement.clientHeight ?
 		document.documentElement.clientHeight : document.body.clientHeight;
 		this.cx += (pX + this.sx - this.cx)/4;this.cy += (pY + this.sy - this.cy)/4;
 if(!this.init)
@@ -138,7 +138,7 @@ if(!this.init)
 			this.init=true;
 			this.cx = pX+this.sx;
 			this.cy = pY+this.sy;
-		}		
+		}
 this.sP(this.cx, this.cy);
 		setTimeout(this.id + "_obj.flt()", 40);
 	}
@@ -164,7 +164,7 @@ JSFX_FloatDiv("divBottomRight", -45, -45).flt();
 ##
 
 navGroup("SIMMONS DB");
-navLink("Home", SDS_HOME_URL);
+navLink("Home", "home.php");
 if(!empty($session->groups['USERS'])) {
   //navLink("Directory", "https://simmons.mit.edu/directory");
   navLink("Directory", "directory/");
@@ -174,7 +174,7 @@ if(!empty($session->groups['USERS'])) {
   navLink("Mailing Lists", "groups/view_mailing_lists.php");
   navLink("Votes and Polls", "polls/polls.php");
   navLink("Lotteries", "lotteries/");
-  navLink("About the DB","users/about.php"); 
+  navLink("About the DB","users/about.php");
 }
 
 ##

@@ -27,8 +27,9 @@ require_once(dirname(__FILE__) . "/sds/config.php");
 ## database initialization
 ##
 
-$SDB = pg_pconnect("dbname=" . SDB_DATABASE . " " .
-                   array_shift(file(SDB_PASSWORD_FILE)));
+$SDB = pg_pconnect("host=" . SDB_HOST . " port=" . SDB_PORT . " dbname=" .
+                   SDB_DATABASE . " user=" . SDB_USER . " password=" .
+                   SDB_PASSWORD);
 if(!$SDB) {
   sdsErrorPage("Database Gone Fishin", 'PostgreSQL seems to be on vacation.  Email<i><a href="mailto:simmons-tech@mit.edu">simmons-tech@mit.edu</a></i> and let them know of this terrible situation.');
   exit;
@@ -266,11 +267,11 @@ function sdsIsShowingReminders()
 
 ## Encrypt some text using.
 ## If a $key string is given, that public key will be used.  Otherwise, the
-## SimmonsDB public key will be used. 
+## SimmonsDB public key will be used.
 ##
 ## Note that the SimmonsDB private key is only available to root, making 
-## this a good way of storing things in the database that only root should 
-## ever see, but a bad way of storing things that anyone would ever want 
+## this a good way of storing things in the database that only root should
+## ever see, but a bad way of storing things that anyone would ever want
 ## to access from php.
 ##
 ## Keypairs can be generated using /var/www/sds/util/simdb_keygen.pl
@@ -279,7 +280,7 @@ function sdsEncrypt($toEncrypt, $key="") {
   $encrypt_script = "/var/www/sds/util/simdb_encrypt.pl";
   $to_script = 0;
   $from_script = 1;
-  $descriptor_spec = array( 
+  $descriptor_spec = array(
     $to_script => array("pipe", "r"),
     $from_script => array("pipe", "w")
   );
@@ -308,7 +309,7 @@ function sdsEncrypt($toEncrypt, $key="") {
   fclose($pipes[$from_script]);
 
   $return_value = proc_close($process);
-  
+
   if ($return_value != 0) {
     echo "ENCRYPTION FAILURE: $encrypt_script exited with code $return_value";
     exit;
@@ -325,7 +326,7 @@ function sdsDecrypt($toDecrypt, $key) {
   $decrypt_script = "/var/www/sds/util/simdb_decrypt.pl";
   $to_script = 0;
   $from_script = 1;
-  $descriptor_spec = array( 
+  $descriptor_spec = array(
     $to_script => array("pipe", "r"),
     $from_script => array("pipe", "w")
   );
@@ -350,7 +351,7 @@ function sdsDecrypt($toDecrypt, $key) {
   fclose($pipes[$from_script]);
 
   $return_value = proc_close($process);
-  
+
   if ($return_value != 0) {
     echo "DECRYPTION FAILURE: $decrypt_script exited with code $return_value";
     exit;
@@ -457,7 +458,7 @@ function sdsRequireGroup() {
 
 
 ## sql insertion helper
-## 
+##
 ## takes an array $_B and a list (a, b, c).
 ## returns "(a, b, c) VALUES ($_B[a], $_B[b], $_B[c])"
 function sqlArrayInsert ($array, $fields = null) {
@@ -484,7 +485,7 @@ function sqlArrayInsert ($array, $fields = null) {
   }
 }
 
-## sql update helper 
+## sql update helper
 ##
 ## similar to sqlArrayInsert except output as for SQL UPDATE statement.
 function sqlArrayUpdate ($array, $fields = null) {
@@ -524,11 +525,11 @@ function urlOptions($maintainfields) {
   }
   return $accum;
 }
-  
 
 
 
-## 
+
+##
 ## user input validation functions
 ##
 
