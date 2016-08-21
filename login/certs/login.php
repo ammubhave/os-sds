@@ -5,7 +5,7 @@
 ## dramage 2002.09
 ## bonawitz 2004.12.13 : major cleanup
 ##
-## interface for user session management.  
+## interface for user session management.
 
 
 ## This script takes the following GET commands:
@@ -28,7 +28,7 @@
 ## be part of the URL, and as such would be recorded in the apache logs and various
 ## other places where cleartext passwords have no business being.  Thus, the solution
 ## is to only request client certificates for pages in the certs directory, and to
-## post passwords to a different script in the nocerts directory.  
+## post passwords to a different script in the nocerts directory.
 ##
 ## Remember: you can not POST to files in the certs directory, and you should not
 ## GET passwords to files in the nocerts directory!
@@ -77,34 +77,11 @@ if(!empty($_REQUEST["continue"])) {
   exit;
 }
 
-##############################################
-## next, we'll inspect the user's certificate if not at desk
-unset($certificate_username);
-$deskip = sdsGetStrOption('desk-ip');
-if($_SERVER["REMOTE_ADDR"] !== $deskip and
-   isset($_SERVER['SSL_CLIENT_S_DN']) and
-   strlen($_SERVER["SSL_CLIENT_S_DN"])) {
-  ## certificate found.  get certifate username
-  $certificate_username = preg_replace("/\@MIT\.EDU$/", "",
-				       $_SERVER["SSL_CLIENT_S_DN_Email"]);
-
-  ## Given a certificate username, we can login if the appropriate GET
-  ## commands tell us to
-  if(!empty($_REQUEST["auto"]) or !empty($_REQUEST["certificate"])) {
-    if(!isset($session) or $certificate_username !== $session->username) {
-      $session = createSession($certificate_username);
-    }
-    header("Location: " . sdsLink($sdsToURL,$sdsToArgs,true));
-    exit;
-  }
-}
-
-
 ############################################
 ## if we couldn't log via certificates,
-## then we're going to have to ask the user for a password no matter what, so 
+## then we're going to have to ask the user for a password no matter what, so
 ## we should start drawing up the form now.
- 
+
 if (!$session)  $session = createSession("GUEST");
 sdsIncludeHeader("Simmons DB", "Welcome to Simmons DB");
 
@@ -117,6 +94,10 @@ if(!empty($_REQUEST["url"])) {
   certificate</a>, or by logging in with a password below:</p>
 <?php
 }
+
+echo "<hr/><a href='openid.php?url=",
+     sdsLink($sdsToURL,$sdsToArgs),
+     "'>Login using MIT Certificates</a><hr/>";
 
 #######################################
 ### PASSWORD-FREE LOGIN OPTIONS
@@ -224,3 +205,4 @@ Please enter them below to login</p>
 
 <?php
 sdsIncludeFooter();
+
