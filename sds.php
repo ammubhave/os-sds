@@ -48,7 +48,7 @@ if(empty($sdsNoAuthentication)) {
   if (!$session) {
 #   $session = createSession("GUEST");
     header("Location: " . SDS_AUTO_LOGIN_URL . "&url=" .
-           urlencode('https://simmons.mit.edu' . $_SERVER['REQUEST_URI']));
+           urlencode($_SERVER['REQUEST_URI']));
     exit;
   }
 }

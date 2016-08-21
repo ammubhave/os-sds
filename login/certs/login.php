@@ -95,9 +95,17 @@ if(!empty($_REQUEST["url"])) {
 <?php
 }
 
-echo "<hr/><a href='openid.php?url=",
+$deskip = sdsGetStrOption('desk-ip');
+if($_SERVER["REMOTE_ADDR"] !== $deskip) {
+  echo "<hr/><a href='openid.php?url=",
      sdsLink($sdsToURL,$sdsToArgs),
-     "'>Login using MIT Certificates</a><hr/>";
+     "' style='border: 3px double #86B05D;
+    border-color: #A7C687 #618938 #618938 #A7C687;
+    background-color: #7DB047;
+    color: #fff;
+    padding: 2px 10px;
+    margin-top: 12px;'>Login using MIT Certificates &gt;</a><hr/>";
+}
 
 #######################################
 ### PASSWORD-FREE LOGIN OPTIONS
@@ -113,16 +121,6 @@ if (strlen($session->username)) {
     htmlspecialchars($session->username),".</td>\n";
   echo '    <td><input name="continue" type="submit" value="Continue as ',
     htmlspecialchars($session->username),"\" /> </td>\n";
-  echo "  </tr>\n";
-}
-
-if(!empty($certificate_username) and
-   $certificate_username !== $session->username) {
-  echo "  <tr>\n";
-  echo "    <td>Your MIT certificate identifies you as ",
-    htmlspecialchars($certificate_username),".</td>\n";
-  echo '    <td><input name="certificate" type="submit" value="Login as ',
-    htmlspecialchars($certificate_username),"\" /> </td>\n";
   echo "  </tr>\n";
 }
 
@@ -167,36 +165,6 @@ for details.</p>
     <td>
 <?php echo $sdsErrorBlock ?>
       <input name='sds' type='submit' value='Login' />
-    </td>
-  </tr>
-
-</table>
-</form>
-
-<!-- Athena username+password -->
-<p>You can now also login using your athena username/password pair.
-Please enter them below to login</p>
-
-<form action='../nocerts/password-based-login.php' method='post'>
-<input type='hidden' name='url' value="<?php echo sdsLink($sdsToURL,$sdsToArgs) ?>" />
-<?php echo sdsForm() ?>
-<table>
-
-  <tr>
-    <td align='right'>Username:</td>
-    <td><input name='athena_username' type='text' size='12' /></td>
-  </tr>
-
-  <tr>
-    <td align='right'>Password:</td>
-    <td><input name='athena_password' type='password' size='12' /></td>
-  </tr>
-
-  <tr>
-    <td></td>
-    <td>
-<?php echo $sdsErrorBlock ?>
-      <input name='athena' type='submit' value='Login via Athena' />
     </td>
   </tr>
 
