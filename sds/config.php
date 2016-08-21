@@ -18,5 +18,5 @@ define ('SDB_PORT', $SDB_PORT);
 define ('SDB_DATABASE', getenv('SDB_DATABASE'));
 define ('SDB_USER', getenv('SDB_USER'));
 define ('SDB_PASSWORD', getenv('SDB_PASSWORD'));
-define ('SDS_QUERY_LOG', "/tmp/querylogs/sds");
+define ('SDS_QUERY_LOG', "/tmp/querylogs_sds");
 ?>
